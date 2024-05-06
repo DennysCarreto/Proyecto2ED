@@ -1,164 +1,355 @@
-import tkinter as tk
-from operaciones import VentanaOperaciones
+from clases import *
 
-class AplicacionEstructurasDatos(tk.Tk):
-    def __init__(self):
-        super().__init__()
-        self.title("Gestión de Estructuras de Datos")
-        self.geometry("700x600")
 
-        # Crear secciones principales
-        self.tipo_dato()
-        self.estructura_datos()
+def menu_pila():
+    pila = Pila()
+    while True:
+        print("\nMenú Pila:")
+        print("1. Insertar")
+        print("2. Eliminar")
+        print("3. Buscar valor")
+        print("4. Volver al menú principal")
+        opcion = input("Selecciona una opción: ")
 
-    def tipo_dato(self):
-        marco_tipo_dato = tk.LabelFrame(self, text="Tipo de Dato", padx=10, pady=10)
-        marco_tipo_dato.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+        if opcion == "1":
+            valor = input("Ingrese el valor a insertar: ")
+            pila.insertar(valor)
+        elif opcion == "2":
+            print("Se ha eliminado el valor:", pila.eliminar())
+        elif opcion == "3":
+            valor = input("Ingrese el valor a buscar: ")
+            if pila.buscar_valor(valor):
+                print("El valor", valor, "se encuentra en la pila.")
+            else:
+                print("El valor", valor, "no se encuentra en la pila.")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida. Inténtalo de nuevo.")
 
-        tipos_datos = ["Entero", "Flotante", "Booleano", "Cadena", "TAD"]
-        self.variable_tipo_dato = tk.StringVar(value=tipos_datos[0])
-        for tipo_dato in tipos_datos:
-            radio_tipo_dato = tk.Radiobutton(marco_tipo_dato, text=tipo_dato, variable=self.variable_tipo_dato, value=tipo_dato)
-            radio_tipo_dato.pack(side=tk.LEFT, padx=5)
 
-    def estructura_datos(self):
-        marco_estructura_datos = tk.LabelFrame(self, text="Estructura de Datos", padx=10, pady=10)
-        marco_estructura_datos.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
+def menu_cola():
+    cola = Cola()
+    while True:
+        print("\nMenú Cola:")
+        print("1. Insertar")
+        print("2. Eliminar")
+        print("3. Buscar valor")
+        print("4. Volver al menú principal")
+        opcion = input("Selecciona una opción: ")
 
-        self.variable_estructura_datos = tk.StringVar()
-        self.marco_operaciones = tk.Frame(self)
-        self.marco_operaciones.pack(side=tk.BOTTOM, padx=10, pady=10)
+        if opcion == "1":
+            valor = input("Ingrese el valor a insertar: ")
+            cola.insertar(valor)
+        elif opcion == "2":
+            print("Se ha eliminado el valor:", cola.eliminar())
+        elif opcion == "3":
+            valor = input("Ingrese el valor a buscar: ")
+            if cola.buscar_valor(valor):
+                print("El valor", valor, "se encuentra en la cola.")
+            else:
+                print("El valor", valor, "no se encuentra en la cola.")
+        elif opcion == "4":
+            break
+        else:
+            print("Opción inválida. Inténtalo de nuevo.")
 
-        fila = 0
-        columna = 0
 
-        boton_pila = tk.Button(marco_estructura_datos, text="Pila", command=lambda: self.mostrar_operaciones("Pila"))
-        boton_pila.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
+def menu_lista_simplemente_ligada():
+    lista = LSimplementeLigada()
+    while True:
+        print("\nMenú Lista Simplemente Ligada:")
+        print("1. Insertar al inicio")
+        print("2. Insertar al final")
+        print("3. Eliminar inicio")
+        print("4. Eliminar final")
+        print("5. Buscar valor")
+        print("6. Volver al menú principal")
+        opcion = input("Selecciona una opción: ")
 
-        boton_cola = tk.Button(marco_estructura_datos, text="Cola", command=lambda: self.mostrar_operaciones("Cola"))
-        boton_cola.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
+        if opcion == "1":
+            valor = input("Ingrese el valor a insertar al inicio: ")
+            lista.insertar_inicio(valor)
+        elif opcion == "2":
+            valor = input("Ingrese el valor a insertar al final: ")
+            lista.insertar_final(valor)
+        elif opcion == "3":
+            print("Se ha eliminado el valor:", lista.eliminar_inicio())
+        elif opcion == "4":
+            print("Se ha eliminado el valor:", lista.eliminar_final())
+        elif opcion == "5":
+            valor = input("Ingrese el valor a buscar: ")
+            if lista.buscar_valor(valor):
+                print("El valor", valor, "se encuentra en la lista.")
+            else:
+                print("El valor", valor, "no se encuentra en la lista.")
+        elif opcion == "6":
+            break
+        else:
+            print("Opción inválida. Inténtalo de nuevo.")
 
-        boton_lista_simple = tk.Button(marco_estructura_datos, text="Lista Simple", command=lambda: self.mostrar_operaciones("Lista Simple"))
-        boton_lista_simple.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
 
-        boton_lista_circular = tk.Button(marco_estructura_datos, text="Lista Circular", command=lambda: self.mostrar_operaciones("Lista Circular"))
-        boton_lista_circular.grid(row=fila, column=columna, padx=5, pady=5)
-        columna = 0
-        fila += 1
+def menu_lista_circular():
+    lista = ListaCircular()
+    while True:
+        print("\n--- Menú Lista Circular Simple ---")
+        print("1. Insertar al inicio")
+        print("2. Insertar al final")
+        print("3. Eliminar al inicio")
+        print("4. Eliminar al final")
+        print("5. Buscar valor")
+        print("6. Rotar a la izquierda")
+        print("7. Rotar a la derecha")
+        print("8. Imprimir lista")
+        print("9. Volver al menú principal")
 
-        boton_lista_doble = tk.Button(marco_estructura_datos, text="Lista Doblemente Ligada", command=lambda: self.mostrar_operaciones("Lista Doblemente Ligada"))
-        boton_lista_doble.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
+        opcion = input("Seleccione una opción: ")
 
-        boton_lista_circular_doble = tk.Button(marco_estructura_datos, text="Lista Circular Doble", command=lambda: self.mostrar_operaciones("Lista Circular Doble"))
-        boton_lista_circular_doble.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
+        if opcion == "1":
+            dato = input("Ingrese el dato a insertar al inicio: ")
+            lista.insertar_inicio(dato)
+        elif opcion == "2":
+            dato = input("Ingrese el dato a insertar al final: ")
+            lista.insertar_final(dato)
+        elif opcion == "3":
+            dato_eliminado = lista.eliminar_inicio()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "4":
+            dato_eliminado = lista.eliminar_final()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "5":
+            dato = input("Ingrese el valor a buscar: ")
+            resultado = lista.buscar_dato(dato)
+            if resultado:
+                print("El valor", dato, "se encuentra en la lista.")
+            else:
+                print("El valor", dato, "no se encuentra en la lista.")
+        elif opcion == "6":
+            lista.rotar_izquierda()
+            print("Se ha rotado la lista a la izquierda.")
+        elif opcion == "7":
+            lista.rotar_derecha()
+            print("Se ha rotado la lista a la derecha.")
+        elif opcion == "8":
+            print("Lista actual:")
+            lista.imprimir_lista()
+        elif opcion == "9":
+            print("Volviendo al menú principal...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
 
-        boton_arbol_binario = tk.Button(marco_estructura_datos, text="Arbol Binario", command=lambda: self.mostrar_operaciones("Arbol Binario"))
-        boton_arbol_binario.grid(row=fila, column=columna, padx=5, pady=5)
-        columna += 1
 
-        boton_arbol_busqueda = tk.Button(marco_estructura_datos, text="Arbol de Busqueda", command=lambda: self.mostrar_operaciones("Arbol de Busqueda"))
-        boton_arbol_busqueda.grid(row=fila, column=columna, padx=5, pady=5)
+def menu_lista_doblemente_ligada():
+    lista = LDobleLigada
+    while True:
+        print("\n--- Menú Lista Doblemente Ligada ---")
+        print("1. Insertar al inicio")
+        print("2. Insertar al final")
+        print("3. Insertar por posición")
+        print("4. Eliminar al inicio")
+        print("5. Eliminar al final")
+        print("6. Eliminar por posición")
+        print("7. Buscar valor")
+        print("8. Imprimir lista")
+        print("9. Volver al menú principal")
 
-    # def mostrar_operaciones(self, estructura_datos):
-    #     for widget in self.marco_operaciones.winfo_children():
-    #         widget.destroy()
-    #
-    #     if estructura_datos == "Pila":
-    #         boton_insertar = tk.Button(self.marco_operaciones, text="Insertar")
-    #         boton_insertar.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar = tk.Button(self.marco_operaciones, text="Eliminar")
-    #         boton_eliminar.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Cola":
-    #         boton_insertar = tk.Button(self.marco_operaciones, text="Insertar")
-    #         boton_insertar.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar = tk.Button(self.marco_operaciones, text="Eliminar")
-    #         boton_eliminar.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Lista Simple":
-    #         boton_insertar_inicio = tk.Button(self.marco_operaciones, text="Insertar al Inicio")
-    #         boton_insertar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_final = tk.Button(self.marco_operaciones, text="Insertar al Final")
-    #         boton_insertar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_inicio = tk.Button(self.marco_operaciones, text="Eliminar del Inicio")
-    #         boton_eliminar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_final = tk.Button(self.marco_operaciones, text="Eliminar del Final")
-    #         boton_eliminar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos =="Lista Circular":
-    #         boton_insertar_inicio = tk.Button(self.marco_operaciones, text="Insertar al Inicio")
-    #         boton_insertar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_final = tk.Button(self.marco_operaciones, text="Insertar al Final")
-    #         boton_insertar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_inicio = tk.Button(self.marco_operaciones, text="Eliminar del Inicio")
-    #         boton_eliminar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_final = tk.Button(self.marco_operaciones, text="Eliminar del Final")
-    #         boton_eliminar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #         btn_rotar_derecha = tk.Button(self.marco_operaciones, text="Rotar Derecha")
-    #         btn_rotar_derecha.pack(side=tk.LEFT, padx=5)
-    #         btn_rotar_izquierda = tk.Button(self.marco_operaciones, text="Rotar Izquierda")
-    #         btn_rotar_izquierda.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Lista Doblemente Ligada":
-    #         boton_insertar_inicio = tk.Button(self.marco_operaciones, text="Insertar al Inicio")
-    #         boton_insertar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_final = tk.Button(self.marco_operaciones, text="Insertar al Final")
-    #         boton_insertar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_posicion = tk.Button(self.marco_operaciones, text="Insertar por Posicion")
-    #         boton_insertar_posicion.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_inicio = tk.Button(self.marco_operaciones, text="Eliminar del Inicio")
-    #         boton_eliminar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_final = tk.Button(self.marco_operaciones, text="Eliminar del Final")
-    #         boton_eliminar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_posicion = tk.Button(self.marco_operaciones, text="Eliminar por Posicion")
-    #         boton_eliminar_posicion.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Lista Circular Doble":
-    #         boton_insertar_inicio = tk.Button(self.marco_operaciones, text="Insertar al Inicio")
-    #         boton_insertar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_final = tk.Button(self.marco_operaciones, text="Insertar al Final")
-    #         boton_insertar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_inicio = tk.Button(self.marco_operaciones, text="Eliminar del Inicio")
-    #         boton_eliminar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar_final = tk.Button(self.marco_operaciones, text="Eliminar del Final")
-    #         boton_eliminar_final.pack(side=tk.LEFT, padx=5)
-    #         btn_rotar_derecha = tk.Button(self.marco_operaciones, text="Rotar Derecha")
-    #         btn_rotar_derecha.pack(side=tk.LEFT, padx=5)
-    #         btn_rotar_izquierda = tk.Button(self.marco_operaciones, text="Rotar Izquierda")
-    #         btn_rotar_izquierda.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Arbol Binario":
-    #         boton_insertar_inicio = tk.Button(self.marco_operaciones, text="Insertar al Izquierda")
-    #         boton_insertar_inicio.pack(side=tk.LEFT, padx=5)
-    #         boton_insertar_final = tk.Button(self.marco_operaciones, text="Insertar al Derecha")
-    #         boton_insertar_final.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar = tk.Button(self.marco_operaciones, text="Eliminar")
-    #         boton_eliminar.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     elif estructura_datos == "Arbol de Busqueda":
-    #         boton_insertar = tk.Button(self.marco_operaciones, text="Insertar al Derecha")
-    #         boton_insertar.pack(side=tk.LEFT, padx=5)
-    #         boton_eliminar = tk.Button(self.marco_operaciones, text="Eliminar")
-    #         boton_eliminar.pack(side=tk.LEFT, padx=5)
-    #         boton_buscar = tk.Button(self.marco_operaciones, text="Buscar")
-    #         boton_buscar.pack(side=tk.LEFT, padx=5)
-    #     # Agrega más condiciones para las demás estructuras de datos
+        opcion = input("Seleccione una opción: ")
 
-    def mostrar_operaciones(self, estructura_datos):
-        ventana_operaciones = VentanaOperaciones(self, estructura_datos)
+        if opcion == "1":
+            dato = input("Ingrese el dato a insertar al inicio: ")
+            lista.insertar_inicio(dato)
+        elif opcion == "2":
+            dato = input("Ingrese el dato a insertar al final: ")
+            lista.insertar_final(dato)
+        elif opcion == "3":
+            dato = input("Ingrese el dato a insertar: ")
+            posicion = int(input("Ingrese la posición donde desea insertar el dato: "))
+            lista.insertar_por_posicion(dato, posicion)
+        elif opcion == "4":
+            dato_eliminado = lista.eliminar_inicio()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "5":
+            dato_eliminado = lista.eliminar_final()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "6":
+            posicion = int(input("Ingrese la posición del dato que desea eliminar: "))
+            dato_eliminado = lista.eliminar_por_posicion(posicion)
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "7":
+            dato = input("Ingrese el valor a buscar: ")
+            resultado = lista.buscar_dato(dato)
+            if resultado:
+                print("El valor", dato, "se encuentra en la lista.")
+            else:
+                print("El valor", dato, "no se encuentra en la lista.")
+        elif opcion == "8":
+            print("Lista actual:")
+            lista.imprimir_lista()
+        elif opcion == "9":
+            print("Volviendo al menú principal...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
+
+
+def menu_lista_circular_doble():
+    lista = LCircularDoble
+    while True:
+        print("\n--- Menú Lista Circular Doble ---")
+        print("1. Insertar al inicio")
+        print("2. Insertar al final")
+        print("3. Eliminar al inicio")
+        print("4. Eliminar al final")
+        print("5. Buscar valor")
+        print("6. Rotar a la izquierda")
+        print("7. Rotar a la derecha")
+        print("8. Imprimir lista")
+        print("9. Volver al menú principal")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            dato = input("Ingrese el dato a insertar al inicio: ")
+            lista.insertar_inicio(dato)
+        elif opcion == "2":
+            dato = input("Ingrese el dato a insertar al final: ")
+            lista.insertar_final(dato)
+        elif opcion == "3":
+            dato_eliminado = lista.eliminar_inicio()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "4":
+            dato_eliminado = lista.eliminar_final()
+            if dato_eliminado:
+                print("Se ha eliminado el dato", dato_eliminado)
+        elif opcion == "5":
+            dato = input("Ingrese el valor a buscar: ")
+            resultado = lista.buscar_dato(dato)
+            if resultado:
+                print("El valor", dato, "se encuentra en la lista.")
+            else:
+                print("El valor", dato, "no se encuentra en la lista.")
+        elif opcion == "6":
+            lista.rotar_izquierda()
+            print("Se ha rotado la lista a la izquierda.")
+        elif opcion == "7":
+            lista.rotar_derecha()
+            print("Se ha rotado la lista a la derecha.")
+        elif opcion == "8":
+            print("Lista actual:")
+            lista.imprimir_lista()
+        elif opcion == "9":
+            print("Volviendo al menú principal...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
+
+
+def menu_arbol_binario():
+    arbol = ABinario()
+    while True:
+        print("\n--- Menú Árbol Binario ---")
+        print("1. Insertar a la izquierda")
+        print("2. Insertar a la derecha")
+        print("3. Eliminar")
+        print("4. Buscar valor")
+        print("5. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            valor = input("Ingrese el valor a insertar a la izquierda: ")
+            arbol.insertar(valor)
+        elif opcion == "2":
+            valor = input("Ingrese el valor a insertar a la derecha: ")
+            arbol.insertar(valor)
+        elif opcion == "3":
+            valor = input("Ingrese el valor a eliminar: ")
+            arbol.eliminar(valor)
+        elif opcion == "4":
+            valor = input("Ingrese el valor a buscar: ")
+            resultado = arbol.buscar(valor)
+            if resultado:
+                print("El valor", valor, "se encuentra en el árbol.")
+            else:
+                print("El valor", valor, "no se encuentra en el árbol.")
+        elif opcion == "5":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
+
+
+def menu_arbol_de_busqueda():
+    arbol = ABusqueda()
+    while True:
+        print("\n--- Menú Árbol de Búsqueda ---")
+        print("1. Insertar valor")
+        print("2. Eliminar valor")
+        print("3. Buscar valor")
+        print("4. Salir")
+
+        opcion = input("Seleccione una opción: ")
+
+        if opcion == "1":
+            valor = input("Ingrese el valor a insertar: ")
+            arbol.insertar(valor)
+        elif opcion == "2":
+            valor = input("Ingrese el valor a eliminar: ")
+            arbol.eliminar(valor)
+        elif opcion == "3":
+            valor = input("Ingrese el valor a buscar: ")
+            resultado = arbol.buscar(valor)
+            if resultado:
+                print("El valor", valor, "se encuentra en el árbol.")
+            else:
+                print("El valor", valor, "no se encuentra en el árbol.")
+        elif opcion == "4":
+            print("Saliendo del programa...")
+            break
+        else:
+            print("Opción no válida. Por favor, seleccione una opción válida.")
+
 
 if __name__ == "__main__":
-    app = AplicacionEstructurasDatos()
-    app.mainloop()
+    while True:
+        print("Menú:")
+        print("1. Pila")
+        print("2. Cola")
+        print("3. Lista simplemente ligada")
+        print("4. Lista circular")
+        print("5. Lista doblemente ligada")
+        print("6. Lista circular doble")
+        print("7. Árbol binario")
+        print("8. Árbol de búsqueda")
+        print("9. Salir")
+
+        opcion = input("Selecciona una opción: ")
+
+        if opcion == "1":
+            menu_pila()
+        elif opcion == "2":
+            menu_cola()
+        elif opcion == "3":
+            menu_lista_simplemente_ligada()
+        elif opcion == "4":
+            menu_lista_circular()
+        elif opcion == "5":
+            menu_lista_doblemente_ligada()
+        elif opcion == "6":
+            menu_lista_circular_doble()
+        elif opcion == "7":
+            menu_arbol_binario()
+        elif opcion == "8":
+            menu_arbol_de_busqueda()
+        elif opcion == "9":
+            print("¡Hasta luego!")
+            break
+        else:
+            print("Opción inválida. Inténtalo de nuevo.")

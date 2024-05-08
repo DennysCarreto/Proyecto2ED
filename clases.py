@@ -49,7 +49,26 @@ class Pila:
         while actual:
             print(actual.dato, end=" -> ")
             actual = actual.siguiente
-        print("None")
+        #print("None")
+
+    def imprimir_pilax(self):
+        # Variable para almacenar la representación de la pila
+        representacion_pila = ""
+
+        actual = self.tope
+        while actual:
+            representacion_pila += str(actual.dato) + "  \n"
+            actual = actual.siguiente
+
+        # Si la pila no está vacía, elimina los dos últimos caracteres (->)
+        if representacion_pila:
+            representacion_pila = representacion_pila[:-3]
+
+        # Agrega "None" al final
+        representacion_pila += "\nNone"
+
+        # Retorna la representación de la pila
+        return representacion_pila
 
     def buscar_valor(self, dato):
         actual = self.tope
